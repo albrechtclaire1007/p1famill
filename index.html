@@ -22,7 +22,6 @@
   --bad:#ffcccc;
   --ok:#b7f0c8;
 
-  /* compact sizing */
   --border:3px;
   --shadow:0 10px 24px rgba(0,0,0,.08);
   --pad:clamp(10px,2.2vw,16px);
@@ -36,10 +35,8 @@ html,body{
   color:var(--ink);
   font-family:'Schoulschrëft', Arial, sans-serif;
 }
-
 .hidden{display:none!important;}
 
-/* ===== top nav ===== */
 .top{
   position:sticky; top:8px; z-index:10;
   display:flex; gap:10px; justify-content:center; align-items:center;
@@ -67,7 +64,6 @@ html,body{
 .iconBtn:active{transform:scale(.98);}
 #flowLabel{font-size:1.05rem; opacity:.9;}
 
-/* ===== sections ===== */
 .wrap{
   min-height:calc(100vh - 70px);
   display:flex;
@@ -82,19 +78,14 @@ h1{
   font-size:clamp(1.6rem,3.8vw,2.6rem);
 }
 
-/* ===== game 1 grid: force 2 rows on desktop ===== */
 .grid{
   width:min(980px,96vw);
   display:grid;
   gap:clamp(.55rem,1.6vw,1rem);
-  grid-template-columns:repeat(8, minmax(0,1fr)); /* 2 rows for ~15 items */
+  grid-template-columns:repeat(8, minmax(0,1fr));
 }
-@media (max-width:860px){
-  .grid{grid-template-columns:repeat(6, minmax(0,1fr));}
-}
-@media (max-width:520px){
-  .grid{grid-template-columns:repeat(4, minmax(0,1fr));}
-}
+@media (max-width:860px){ .grid{grid-template-columns:repeat(6, minmax(0,1fr));} }
+@media (max-width:520px){ .grid{grid-template-columns:repeat(4, minmax(0,1fr));} }
 
 .imgToken{
   background:var(--white);
@@ -125,7 +116,6 @@ h1{
 }
 .btn:active{transform:scale(.98);}
 
-/* ===== big picture ===== */
 .bigSquare{
   width:min(42vmin,360px,85vw);
   aspect-ratio:1/1;
@@ -159,7 +149,6 @@ h1{
 .fade{animation:fadeIn .25s ease;}
 @keyframes fadeIn{from{opacity:0; transform:scale(.92)} to{opacity:1; transform:scale(1)}}
 
-/* ===== memory ===== */
 .memGrid{
   width:min(980px,96vw);
   display:grid;
@@ -182,9 +171,7 @@ h1{
   backface-visibility:hidden;
   box-shadow:var(--shadow);
 }
-.front{
-  background:#fff url('https://i.postimg.cc/ZKkYXy7g/cardback-p1-game.png') center/68% no-repeat;
-}
+.front{background:#fff url('https://i.postimg.cc/ZKkYXy7g/cardback-p1-game.png') center/68% no-repeat;}
 .back{transform:rotateY(180deg);}
 .memWord{
   font-size:clamp(1.25rem,3.3vmin,1.8rem);
@@ -193,7 +180,6 @@ h1{
   line-height:1.15;
 }
 
-/* ===== game 4: "Dat ass ..." ===== */
 .sentence{
   display:flex;
   align-items:center;
@@ -226,21 +212,18 @@ h1{
   <button class="iconBtn" id="next" aria-label="nächst">▶</button>
 </div>
 
-<!-- GAME 1 -->
 <section class="wrap" id="g1">
   <h1>Lauschter a klick</h1>
   <div class="grid" id="grid1"></div>
   <button class="btn" id="play1">Toun nach eng Kéier</button>
 </section>
 
-<!-- GAME 2 -->
 <section class="wrap hidden" id="g2">
   <h1>Memory</h1>
   <div class="memGrid" id="memGrid"></div>
   <button class="btn" id="memReset">↻ Reset</button>
 </section>
 
-<!-- GAME 3 -->
 <section class="wrap hidden" id="g3">
   <h1>Kuck d'Bild a so wat et ass</h1>
   <div class="bigSquare" id="bigSq" title="Klick fir en neit Bild">
@@ -250,7 +233,6 @@ h1{
   <button class="btn" id="sayPlay">Toun spillen</button>
 </section>
 
-<!-- GAME 4 -->
 <section class="wrap hidden" id="g4">
   <h1>Dat ass …</h1>
   <div class="sentence">
@@ -265,22 +247,19 @@ h1{
 <audio id="speaker" preload="auto"></audio>
 
 <script>
-<script>
 /* ================= DATA (P1 – FAMILL) ================= */
 const AUDIO_BASE = "https://github.com/albrechtclaire1007/p1famill/raw/refs/heads/main/";
-
 const ITEMS = [
-  { id:'bom',      word:'meng Bom',      img:'https://i.postimg.cc/rKGTh8W7/Bom.png',       audio:'p1_bom.mp3' },
-  { id:'bop',      word:'mäi Bop',       img:'https://i.postimg.cc/75xkdpMp/Bop.png',       audio:'p1_bop.mp3' },
-  { id:'brudder',  word:'mäi Brudder',   img:'https://i.postimg.cc/sMVrqt4F/Brudder.png',   audio:'p1_brudder.mp3' },
-  { id:'mamm',     word:'meng Mamm',     img:'https://i.postimg.cc/sMVrqt9N/Mam.png',       audio:'p1_mamm.mp3' },
-  { id:'papp',     word:'mäi Papp',      img:'https://i.postimg.cc/0z8sFLdH/Papp.png',      audio:'p1_papp.mp3' },
-  { id:'schwester',word:'meng Schwëster',img:'https://i.postimg.cc/871S9qmP/Schwester.png', audio:'p1_schwester.mp3' }
+  { id:'bom',       word:'meng Bom',       img:'https://i.postimg.cc/rKGTh8W7/Bom.png',        audio:'p1_bom.mp3' },
+  { id:'bop',       word:'mäi Bop',        img:'https://i.postimg.cc/75xkdpMp/Bop.png',        audio:'p1_bop.mp3' },
+  { id:'brudder',   word:'mäi Brudder',    img:'https://i.postimg.cc/sMVrqt4F/Brudder.png',    audio:'p1_brudder.mp3' },
+  { id:'mamm',      word:'meng Mamm',      img:'https://i.postimg.cc/sMVrqt9N/Mam.png',        audio:'p1_mamm.mp3' },
+  { id:'papp',      word:'mäi Papp',       img:'https://i.postimg.cc/0z8sFLdH/Papp.png',       audio:'p1_papp.mp3' },
+  { id:'schwester', word:'meng Schwëster', img:'https://i.postimg.cc/871S9qmP/Schwester.png',  audio:'p1_schwester.mp3' }
 ];
 
 /* ================= HELPERS ================= */
 const speaker=document.getElementById('speaker');
-
 function playAudio(filename){
   if(!filename) return;
   const src = AUDIO_BASE + filename;
@@ -289,7 +268,6 @@ function playAudio(filename){
     speaker.play();
   }catch(e){}
 }
-
 function shuffle(arr){
   const a=[...arr];
   for(let i=a.length-1;i>0;i--){
@@ -310,7 +288,6 @@ const pages=['g1','g2','g3','g4'];
 let p=0;
 document.getElementById('prev').onclick=()=>show(p-1);
 document.getElementById('next').onclick=()=>show(p+1);
-
 function show(i){
   p=Math.max(0,Math.min(pages.length-1,i));
   pages.forEach((id,n)=>document.getElementById(id).classList.toggle('hidden',n!==p));
@@ -321,7 +298,6 @@ show(0);
 /* ================= GAME 1 ================= */
 const grid1=document.getElementById('grid1');
 let g1bag=[], g1target=null;
-
 function initG1(){
   grid1.innerHTML='';
   ITEMS.forEach(it=>{
@@ -351,7 +327,6 @@ initG1();
 const memGrid=document.getElementById('memGrid');
 const memReset=document.getElementById('memReset');
 let memFirst=null, memLock=false;
-
 function buildMemory(){
   memGrid.innerHTML='';
   memFirst=null; memLock=false;
@@ -365,12 +340,9 @@ function buildMemory(){
   deck.forEach(c=>{
     const card=document.createElement('div');
     card.className='card';
-    card.dataset.key=c.key;
-
     const backContent = (c.type==='img')
       ? `<img src="${c.it.img}" style="width:78%;height:78%;object-fit:contain" alt="">`
       : `<div class="memWord">${c.it.word}</div>`;
-
     card.innerHTML=`
       <div class="inner">
         <div class="face front"></div>
@@ -381,7 +353,6 @@ function buildMemory(){
     memGrid.appendChild(card);
   });
 }
-
 function flipCard(card,c){
   if(memLock) return;
   if(card.classList.contains('matched')) return;
@@ -394,7 +365,6 @@ function flipCard(card,c){
 
   memLock=true;
   const isMatch = memFirst.c.key===c.key && memFirst.c.type!==c.type;
-
   if(isMatch){
     memFirst.card.classList.add('matched');
     card.classList.add('matched');
@@ -428,7 +398,6 @@ function nextG3(){
   bigImg.classList.remove('fade'); void bigImg.offsetWidth; bigImg.classList.add('fade');
 }
 function resetG3(){ refillG3(); g3current=null; bigImg.src=''; bigImg.alt=''; }
-
 bigSq.addEventListener('click',(e)=>{ if(e.target!==bigReset) nextG3(); });
 bigReset.addEventListener('click',(e)=>{ e.stopPropagation(); resetG3(); });
 sayPlay.addEventListener('click',()=>{ if(g3current) playAudio(g3current.audio); });
@@ -455,3 +424,4 @@ nounSq.addEventListener('click',()=>{ if(!g4current) return; playAudio(g4current
 
 </body>
 </html>
+
